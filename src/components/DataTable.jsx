@@ -4,6 +4,7 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 
+//table creation
 export default function DataTable({ data, columns, loading }) {
   const table = useReactTable({
     data,

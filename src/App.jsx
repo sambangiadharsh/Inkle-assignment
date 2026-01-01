@@ -13,7 +13,7 @@ export default function App() {
   const [countryId, setCountryId] = useState("");
   const [loading, setLoading] = useState(true);
 
-
+//fetch data and countries
 useEffect(() => {
   
   fetch(TAX_URL)
@@ -35,7 +35,9 @@ useEffect(() => {
       setCountryId(editRow.countryId ?? "");
     }
   }, [editRow]);
+  
 
+  //columns required
   const columns = [
     {
       accessorKey: "entity",
@@ -91,7 +93,8 @@ useEffect(() => {
       ),
     },
   ];
-
+   
+  //save update
   const save = async () => {
     const selected = countries.find(c => c.id === countryId);
     if (!selected) return;
