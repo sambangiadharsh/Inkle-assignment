@@ -70,10 +70,10 @@ useEffect(() => {
       header: "Request date",
       cell: ({ getValue }) =>(
        new Date(getValue()).toLocaleDateString("en-US", {
-  month: "short",
-  day: "2-digit",
-  year: "numeric",
-}))
+       month: "short",
+       day: "2-digit",
+      year: "numeric",
+    }))
 
     },
     {
@@ -95,28 +95,36 @@ useEffect(() => {
   ];
    
   //save update
-  const save = async () => {
-    const selected = countries.find(c => c.id === countryId);
-    if (!selected) return;
+const save = async () => {
+  const selected = countries.find(c => c.id === countryId);
+  if (!selected) return;
 
-    const updated = {
-      ...editRow,
-      entity: name,
-      countryId: selected.id,
-      country: selected.name,
-    };
+  const updated = {
+    ...editRow,
+    entity: name,
+    countryId: selected.id,
+    country: selected.name,
+  };
 
+  // 1️⃣ Update UI immediately
+  setData(prev =>
+    prev.map(r => (r.id === updated.id ? updated : r))
+  );
+  setEditRow(null); // close modal instantly
+
+  // 2️⃣ Send API request in background
+  try {
     await fetch(`${TAX_URL}/${updated.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updated),
     });
+  } catch (err) {
+    console.error("Save failed", err);
+    // optional rollback
+  }
+};
 
-    setData(prev =>
-      prev.map(r => (r.id === updated.id ? updated : r))
-    );
-    setEditRow(null);
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-10">
