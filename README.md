@@ -1,16 +1,45 @@
-# React + Vite
+# 📊 Taxes UI – React Assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple, clean UI built using **React + Vite + Tailwind CSS** that displays tax records in a table and allows editing customer details.
 
-Currently, two official plugins are available:
+ - **Demo Link**  
+ https://inkle-assignment-ymct.onrender.com
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+- Table built using **@tanstack/react-table**
+- Fetches data from MockAPI
+- Edit customer **name** and **country**
+- Country dropdown populated from API
+- **Name field is mandatory**
+- Optimistic UI update after save
+- Clean, responsive, professional UI
+- Proper **loading** and **empty** states handling
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🧱 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React (Vite)
+- Tailwind CSS
+- @tanstack/react-table
+- MockAPI
+
+---
+
+## 🔗 APIs Used
+
+- **Taxes API**  
+  https://685013d7e7c42cfd17974a33.mockapi.io/taxes
+
+- **Countries API**  
+  https://685013d7e7c42cfd17974a33.mockapi.io/countries
+
+---
+
+## 🚀 Getting Started
+
+```bash
+npm install
+npm run dev
