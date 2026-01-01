@@ -11,11 +11,23 @@ export default function App() {
   const [editRow, setEditRow] = useState(null);
   const [name, setName] = useState("");
   const [countryId, setCountryId] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch(TAX_URL).then(r => r.json()).then(setData);
-    fetch(COUNTRY_URL).then(r => r.json()).then(setCountries);
-  }, []);
+
+useEffect(() => {
+  
+  fetch(TAX_URL)
+    .then(r => r.json())
+    .then(taxes => {
+      setData(taxes);
+      setLoading(false); 
+    });
+  fetch(COUNTRY_URL)
+    .then(r => r.json())
+    .then(setCountries);
+}, []);
+
+
 
   useEffect(() => {
     if (editRow) {
@@ -110,7 +122,7 @@ export default function App() {
           Customer Tax Records
         </h1>
 
-        <DataTable data={data} columns={columns} />
+        <DataTable data={data} columns={columns} loading={loading} />
       </div>
 
       <EditModal

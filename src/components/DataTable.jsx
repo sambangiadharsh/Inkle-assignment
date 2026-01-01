@@ -4,28 +4,43 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 
-export default function DataTable({ data, columns }) {
+export default function DataTable({ data, columns, loading }) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
+  // LOADING STATE
+  if (loading) {
+    return (
+      <div className="bg-white rounded-xl shadow-sm border p-8 text-center text-gray-500">
+        Loading records...
+      </div>
+    );
+  }
+  if (!loading && data.length === 0) {
+    return (
+      <div className="bg-white rounded-xl shadow-sm border p-8 text-center text-gray-500">
+        No records found
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
       <table className="w-full text-sm">
-        {/* Header */}
-        <thead className="bg-gray-50 sticky top-0 z-10">
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
+        <thead className="bg-gray-50">
+          {table.getHeaderGroups().map(hg => (
+            <tr key={hg.id}>
+              {hg.headers.map(h => (
                 <th
-                  key={header.id}
+                  key={h.id}
                   className="px-6 py-4 text-left font-semibold text-gray-600 border-b"
                 >
                   {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
+                    h.column.columnDef.header,
+                    h.getContext()
                   )}
                 </th>
               ))}
@@ -33,20 +48,16 @@ export default function DataTable({ data, columns }) {
           ))}
         </thead>
 
-        {/* Body */}
         <tbody>
           {table.getRowModel().rows.map((row, index) => (
             <tr
               key={row.id}
-              className={`
-                ${index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                hover:bg-purple-50 transition-colors
-              `}
+              className={index % 2 ? "bg-gray-50" : ""}
             >
               {row.getVisibleCells().map(cell => (
                 <td
                   key={cell.id}
-                  className="px-6 py-4 text-gray-700 border-b last:border-b-0"
+                  className="px-6 py-4 border-b"
                 >
                   {flexRender(
                     cell.column.columnDef.cell,
@@ -58,13 +69,6 @@ export default function DataTable({ data, columns }) {
           ))}
         </tbody>
       </table>
-
-      {/* Empty state */}
-      {data.length === 0 && (
-        <div className="py-10 text-center text-gray-500">
-          No records found
-        </div>
-      )}
     </div>
   );
 }
